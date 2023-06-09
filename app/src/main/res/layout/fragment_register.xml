@@ -156,7 +156,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegisterRF"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:backgroundTint="#FA4A18"
