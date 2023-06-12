@@ -1,6 +1,8 @@
 package com.example.petpatandroidapp.viewmodels
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,24 +14,20 @@ import kotlinx.coroutines.launch
 
 class LoginViewmodel(application: Application) : AndroidViewModel(application) {
 
-    val userRepo = UserRepository()
     val loginResult: MutableLiveData<BaseResponse<LoginResponseModel>> = MutableLiveData()
 
-    fun loginUser(phone: String, pwd: String) {
+    fun userLogin(phone: String, pwd: String) {
 
         loginResult.value = BaseResponse.Loading()
         viewModelScope.launch {
             try {
+                val response = UserRepository().userLogin(LoginRequestModel(phone, pwd))
 
-                val loginRequest = LoginRequestModel(
-                    phone = phone,
-                    password = pwd
-                )
-                val response = userRepo.userLogin(loginRequestModel = loginRequest)
-                if (response != null) {
-                   // loginResult.value = BaseResponse.Success(response.)
+                if (response!!.equals(200)) {
+                    Log.e("Tag", "successful")
+
                 } else {
-                   // loginResult.value = BaseResponse.Error(response?.message())
+                    loginResult.value = BaseResponse.Error(response?.toString())
                 }
 
             } catch (ex: Exception) {
